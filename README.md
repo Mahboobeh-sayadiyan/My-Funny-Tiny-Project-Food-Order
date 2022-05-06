@@ -3,7 +3,7 @@
 This is a tiny and handy application to order delicious meal<br>
 
 To access this app you can visit this link : <br><br>
-https://guests-list.netlify.app
+https://funny-food-order.netlify.app/
 
 ## Framework -> React.js
 
