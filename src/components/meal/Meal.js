@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from "./Meal.module.css";
 import MealForm from "./MealForm";
+import Cartcontext from "../contexts/CartContext";
 
 const Meal = (props) => {
+  const ctx = useContext(Cartcontext);
   const meal = props.mealvalue;
   const addItemHandler = (value) => {
     const addedItem = { ...meal, count: +value };
-    props.onAddToCart(addedItem);
+    ctx.addToCart(addedItem);
   };
   return (
     <div className={classes.meal}>
@@ -15,7 +17,7 @@ const Meal = (props) => {
         <div className={classes.description}>{meal.description}</div>
         <div className={classes.price}>${meal.price}</div>
       </ul>
-      <MealForm onAddItem={addItemHandler} />
+      <MealForm onAddItem={addItemHandler} id={meal.id} />
     </div>
   );
 };

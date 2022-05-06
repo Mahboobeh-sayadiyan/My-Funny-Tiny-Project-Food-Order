@@ -1,5 +1,6 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer, useContext } from "react";
 import classes from "./CartItem.module.css";
+import Cartcontext from "../contexts/CartContext";
 
 const reducer = (prevcount, action) => {
   if (action.type === "DECRESE") return prevcount - 1;
@@ -7,19 +8,20 @@ const reducer = (prevcount, action) => {
   //else return prevcount;
 };
 const CartItem = (props) => {
+  const ctx = useContext(Cartcontext);
   const item = props.itemvalue;
-  const [countState, countDispatch] = useReducer(reducer, item.count);
-
-  useEffect(() => {
-    const editedItem = { ...item, count: countState };
-    props.onChangeCount(editedItem);
-  }, [countState]);
+  const count = item.count;
+  const [countState, countDispatch] = useReducer(reducer, count);
 
   const changeCountInc = () => {
     countDispatch({ type: "INCRESE" });
+    const editedItem = { ...item, count: countState };
+    ctx.changeCount(editedItem);
   };
   const changeCountDec = () => {
     countDispatch({ type: "DECRESE" });
+    const editedItem = { ...item, count: countState };
+    ctx.changeCount(editedItem);
   };
 
   //   countDispatch({ type: "DECRESE" })

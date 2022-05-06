@@ -5,7 +5,10 @@ import Cartcontext from "../contexts/CartContext";
 const CartButton = (props) => {
   const ctx = useContext(Cartcontext);
   return (
-    <button className={classes.button} onClick={props.onClick}>
+    <button
+      className={`${classes.button} ${ctx.bump ? classes.bump : ""}`}
+      onClick={ctx.showModalCart}
+    >
       <div className={classes.icon}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +19,9 @@ const CartButton = (props) => {
         </svg>
       </div>
       Your Cart
-      <div className={classes.badge}>{ctx === null ? 0 : ctx.length}</div>
+      <div className={classes.badge}>
+        {ctx.cartItems === null ? 0 : ctx.cartItems.length}
+      </div>
     </button>
   );
 };
