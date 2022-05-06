@@ -15,13 +15,12 @@ const CartItem = (props) => {
 
   const changeCountInc = () => {
     countDispatch({ type: "INCRESE" });
-    const editedItem = { ...item, count: countState };
-    ctx.changeCount(editedItem);
+
+    ctx.changeCount({ ...item, count: countState + 1 });
   };
   const changeCountDec = () => {
     countDispatch({ type: "DECRESE" });
-    const editedItem = { ...item, count: countState };
-    ctx.changeCount(editedItem);
+    ctx.changeCount({ ...item, count: countState - 1 });
   };
 
   //   countDispatch({ type: "DECRESE" })
