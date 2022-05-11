@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import CartItem from "./CartItem";
 import classes from "./CartItems.module.css";
 import Cartcontext from "../contexts/CartContext";
+import CheckOutForm from "./CheckOutForm";
 
 const CartItems = (props) => {
   const ctx = useContext(Cartcontext);
@@ -24,18 +25,27 @@ const CartItems = (props) => {
           }, 0)}
         </b>
       </div>
-      <div className={classes.actions}>
-        <button onClick={ctx.hideModalCart} className={classes["button--alt"]}>
-          Close
-        </button>
-        <button onClick={ctx.emptyModalCart} className={classes["button--alt"]}>
-          Empty cart
-        </button>
+      {ctx.checkOut && <CheckOutForm />}
+      {!ctx.checkOut && (
+        <div className={classes.actions}>
+          <button
+            onClick={ctx.hideModalCart}
+            className={classes["button--alt"]}
+          >
+            Close
+          </button>
+          <button
+            onClick={ctx.emptyModalCart}
+            className={classes["button--alt"]}
+          >
+            Empty cart
+          </button>
 
-        <button className={classes.button} onClick={ctx.orderCart}>
-          Order
-        </button>
-      </div>
+          <button className={classes.button} onClick={ctx.orderCart}>
+            Order
+          </button>
+        </div>
+      )}
     </div>
   );
 };

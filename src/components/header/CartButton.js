@@ -4,6 +4,7 @@ import Cartcontext from "../contexts/CartContext";
 
 const CartButton = (props) => {
   const ctx = useContext(Cartcontext);
+
   return (
     <button
       className={`${classes.button} ${ctx.bump ? classes.bump : ""}`}
