@@ -13,7 +13,7 @@ const Checkout = (props) => {
     inputIsInValid: nameIsInValid,
     checkValidaton: nameCheckValidation,
     reset: nameReset,
-  } = UseValid((input) => input.trim() !== "");
+  } = UseValid((input) => input.trim().length > 5);
 
   const {
     value: streetInput,
@@ -21,7 +21,7 @@ const Checkout = (props) => {
     inputIsInValid: streetIsInValid,
     checkValidaton: streetCheckValidation,
     reset: streetReset,
-  } = UseValid((input) => input.trim() !== "");
+  } = UseValid((input) => input.trim().length > 5);
 
   const formIsValid = nameIsValid && streetIsValid;
 
@@ -76,6 +76,7 @@ const Checkout = (props) => {
           onChange={ChangeNameHnadler}
           onBlur={ChangeNameHnadler}
         />
+        {nameIsInValid && <p>Please enter the correct name!</p>}
       </div>
       <div
         className={`${classes.control} ${
@@ -90,6 +91,7 @@ const Checkout = (props) => {
           onChange={ChangeStreetHnadler}
           onBlur={ChangeStreetHnadler}
         />
+        {streetIsInValid && <p>Please enter the correct street name!</p>}
       </div>
       <div className={`${classes.control} ${nameIsInValid ? "invalid" : ""} `}>
         <label htmlFor="postal">Postal Code</label>
