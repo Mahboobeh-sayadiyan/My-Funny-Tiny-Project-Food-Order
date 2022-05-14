@@ -139,11 +139,6 @@ export const CartcontextProvider = (props) => {
     setCheckOut(true);
   };
   const placeOrderHandler = (date) => {
-    console.log(
-      cart.items.map((item) => {
-        return { ...item, date: date };
-      })
-    );
     cartDispatcher({
       type: "ORDER",
       orderedValue: cart.items.map((item) => {

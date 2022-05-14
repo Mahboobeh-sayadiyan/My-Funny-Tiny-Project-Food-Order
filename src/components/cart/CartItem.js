@@ -1,26 +1,18 @@
-import React, { useReducer, useContext } from "react";
+import React, { useReducer } from "react";
 import classes from "./CartItem.module.css";
-import Cartcontext from "../contexts/CartContext";
+import { useDispatch } from "react-redux";
+import { changeCount } from "../../store/cart-slice";
 
-const reducer = (prevcount, action) => {
-  if (action.type === "DECRESE") return prevcount - 1;
-  else if (action.type === "INCRESE") return prevcount + 1;
-  //else return prevcount;
-};
 const CartItem = (props) => {
-  const ctx = useContext(Cartcontext);
+  const dispatch = useDispatch();
   const item = props.itemvalue;
   const count = item.count;
-  const [countState, countDispatch] = useReducer(reducer, count);
 
   const changeCountInc = () => {
-    countDispatch({ type: "INCRESE" });
-
-    ctx.changeCount({ ...item, count: countState + 1 });
+    dispatch(changeCount({ ...item, count: count + 1 }));
   };
   const changeCountDec = () => {
-    countDispatch({ type: "DECRESE" });
-    ctx.changeCount({ ...item, count: countState - 1 });
+    dispatch(changeCount({ ...item, count: count - 1 }));
   };
 
   //   countDispatch({ type: "DECRESE" })
@@ -30,7 +22,7 @@ const CartItem = (props) => {
         <h2>{item.name}</h2>
         <div className={classes.summary}>
           <div className={classes.price}>${item.price}</div>
-          <div className={classes.amount}> X{countState}</div>
+          <div className={classes.amount}> X{count}</div>
         </div>
       </div>
 

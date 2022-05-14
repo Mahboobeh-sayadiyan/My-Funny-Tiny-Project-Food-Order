@@ -1,9 +1,16 @@
-import React, { useContext } from "react";
 import classes from "./Overlay.module.css";
-import Cartcontext from "../contexts/CartContext";
+import { useDispatch } from "react-redux";
+import { hideModalCart } from "../../store/modal-slice";
+import { hideModalorder } from "../../store/modalorders-slice";
 
 const OverlayCart = (props) => {
-  const ctx = useContext(Cartcontext);
-  return <div className={classes.backdrop} onClick={ctx.hideModalCart}></div>;
+  const dispatch = useDispatch();
+  const hideModalCartHandler = () => {
+    dispatch(hideModalCart());
+    dispatch(hideModalorder());
+  };
+  return (
+    <div className={classes.backdrop} onClick={hideModalCartHandler}></div>
+  );
 };
 export default OverlayCart;

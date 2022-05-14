@@ -1,14 +1,21 @@
 import React, { useContext } from "react";
 import classes from "./CartButton.module.css";
-import Cartcontext from "../contexts/CartContext";
+// import Cartcontext from "../contexts/CartContext";
+import { useSelector, useDispatch } from "react-redux";
+import { showModalCart } from "../../store/modal-slice";
 
 const CartButton = (props) => {
-  const ctx = useContext(Cartcontext);
-
+  // const ctx = useContext(Cartcontext);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const bump = useSelector((state) => state.cart.bump);
+  const dispatch = useDispatch();
+  const showModalCartHandler = () => {
+    dispatch(showModalCart());
+  };
   return (
     <button
-      className={`${classes.button} ${ctx.bump ? classes.bump : ""}`}
-      onClick={ctx.showModalCart}
+      className={`${classes.button} ${bump ? classes.bump : ""}`}
+      onClick={showModalCartHandler}
     >
       <div className={classes.icon}>
         <svg
@@ -21,7 +28,7 @@ const CartButton = (props) => {
       </div>
       Your Cart
       <div className={classes.badge}>
-        {ctx.cartItems === null ? 0 : ctx.cartItems.length}
+        {cartItems === null ? 0 : cartItems.length}
       </div>
     </button>
   );

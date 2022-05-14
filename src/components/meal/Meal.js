@@ -1,14 +1,18 @@
 import React, { useContext } from "react";
 import classes from "./Meal.module.css";
 import MealForm from "./MealForm";
-import Cartcontext from "../contexts/CartContext";
+// import Cartcontext from "../contexts/CartContext";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/cart-slice";
 
 const Meal = (props) => {
-  const ctx = useContext(Cartcontext);
+  // const ctx = useContext(Cartcontext);
   const meal = props.mealvalue;
+  const dispatch = useDispatch();
   const addItemHandler = (value) => {
     const addedItem = { ...meal, count: +value };
-    ctx.addToCart(addedItem);
+    // ctx.addToCart(addedItem);
+    dispatch(addToCart(addedItem));
   };
   return (
     <div className={classes.meal}>

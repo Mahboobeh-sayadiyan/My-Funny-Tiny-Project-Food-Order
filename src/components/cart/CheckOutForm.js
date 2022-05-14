@@ -1,11 +1,14 @@
-import { useContext } from "react";
 import classes from "./CheckOutForm.module.css";
-import Cartcontext from "../contexts/CartContext";
 import UseValid from "../../hooks/UseValid";
 import UseFetch from "../../hooks/Usefetch";
+import { useDispatch, useSelector } from "react-redux";
+import { placeOrder, resetAfterOrder } from "../../store/cart-slice";
+import { orderplaceOrder } from "../../store/ordered-slice";
+import { hideModalCart } from "../../store/modal-slice";
 
 const Checkout = (props) => {
-  const ctx = useContext(Cartcontext);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const { error, fetchMeals: sendData } = UseFetch();
   const {
     value: nameInput,
@@ -33,6 +36,10 @@ const Checkout = (props) => {
     streetCheckValidation(e.target.value);
   };
 
+  const hideModalCartHandler = () => {
+    dispatch(hideModalCart());
+  };
+
   const palceOrderHandler = (event) => {
     event.preventDefault();
 
@@ -43,15 +50,24 @@ const Checkout = (props) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: {
-        items: ctx.cartItems,
+        items: cartItems,
         customerName: nameInput,
         date: date.toString(),
       },
     };
 
     sendData(config, () => {});
+    const orders = cartItems.map((item) => {
+      return { ...item, date: date.toString() };
+    });
 
-    ctx.placeOrder(date.toString());
+    dispatch(placeOrder());
+    dispatch(orderplaceOrder(orders));
+    setTimeout(() => {
+      dispatch(hideModalCart());
+      dispatch(resetAfterOrder());
+    }, 1000);
+
     //reset from
     nameReset();
     streetReset();
@@ -104,7 +120,7 @@ const Checkout = (props) => {
         <input type="text" id="city" />
       </div>
       <div className={classes.actions}>
-        <button type="button" onClick={ctx.hideModalCart}>
+        <button type="button" onClick={hideModalCartHandler}>
           Cancel
         </button>
         <button className={classes.submit} disabled={!formIsValid}>
