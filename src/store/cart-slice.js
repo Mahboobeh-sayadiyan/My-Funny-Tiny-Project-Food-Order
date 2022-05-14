@@ -18,6 +18,7 @@ const cartState = createSlice({
       isExist !== -1
         ? (state.cartItems[isExist].count += action.payload.count)
         : state.cartItems.push(action.payload);
+      if (isExist === -1) state.bump = true;
     },
     changeCount: (state, action) => {
       const isExist = state.cartItems.findIndex(
@@ -42,6 +43,9 @@ const cartState = createSlice({
       state.bump = false;
       state.checkOut = false;
     },
+    resetBump(state) {
+      state.bump = false;
+    },
   },
 });
 
@@ -53,6 +57,7 @@ export const {
   initial,
   placeOrder,
   resetAfterOrder,
+  resetBump,
 } = cartState.actions;
 
 ///action creator
